@@ -15,7 +15,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Fill in end
 
     recv = clientSocket.recv(1024).decode()
-    # print(recv) #You can use these print statement to validate return codes from the server.
+    print(recv) #You can use these print statement to validate return codes from the server.
     if recv[:3] != '220':
        print('220 reply not received from server.')
 
@@ -23,7 +23,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     heloCommand = 'HELO Alice\r\n'
     clientSocket.send(heloCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
-    print(recv1) 
+    print('after helo :\t' +recv1) 
     if recv1[:3] != '250':
        print('250 reply not received from server.')
 
@@ -65,11 +65,11 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # recv1 = clientSocket.recv(1024).decode() 
     msgCommand = msg
     clientSocket.send(msgCommand.encode())
-    recv1 = clientSocket.recv(1024).decode()
-    print( 'after msg :\t' + recv1) 
-    print(recv1) 
-    if recv1[:3] != '250':
-        print('250 reply not received from server.')
+    # recv1 = clientSocket.recv(1024).decode()
+    # print( 'after msg :\t' + recv1) 
+    # print(recv1) 
+    # if recv1[:3] != '250':
+    #     print('250 reply not received from server.')
     # Fill in end
 
     # Message ends with a single period, send message end and handle server response.
@@ -77,7 +77,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     endmsgCommand = endmsg
     clientSocket.send(endmsgCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
-    print(recv1) 
+    print('after endmsg :\t' + recv1) 
     if recv1[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
@@ -87,8 +87,8 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     quitCommand = 'QUIT\r\n'
     clientSocket.send(quitCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
-    print(recv1) 
-    if recv1[:3] != '250':
+    print('after quit :\t' + recv1) 
+    if recv1[:3] != '221':
         print('250 reply not received from server.')
     
     clientSocket.close()
